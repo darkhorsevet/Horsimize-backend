@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#1a2e1a">
+<title>Horsimize</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #1a2e1a;
+    --green-mid: #2d5016;
+    --green-brand: #4a7c2f;
+    --green-light: #7ab648;
+    --green-pale: #e8f5d9;
+    --cream: #f5f0e8;
+    --warm-brown: #8b6914;
+    --amber: #d4860a;
+    --amber-light: #f5c842;
+    --text-dark: #1a1a1a;
+    --text-mid: #4a4a4a;
+    --text-light: #8a8a8a;
+    --white: #ffffff;
+    --shadow: 0 4px 24px rgba(26,46,26,0.12);
+    --shadow-lg: 0 8px 40px rgba(26,46,26,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--green-deep);
+    min-height: 100vh;
+    color: var(--text-dark);
+  }
+
+  /* APP SHELL */
+  .app {
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* SCREENS */
+  .screen { display: none; min-height: 100vh; flex-direction: column; }
+  .screen.active { display: flex; }
+
+  /* ========== SPLASH ========== */
+  #screen-splash {
+    background: linear-gradient(160deg, var(--green-deep) 0%, var(--green-mid) 60%, var(--green-brand) 100%);
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #screen-splash::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(122,182,72,0.15) 0%, transparent 70%);
+    top: -200px; right: -200px;
+  }
+  #screen-splash::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,124,47,0.2) 0%, transparent 70%);
+    bottom: -100px; left: -100px;
+  }
+  .splash-content { text-align: center; z-index: 1; padding: 40px; }
+  .logo-mark {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, var(--green-light), var(--green-brand));
+    border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 8px 32px rgba(122,182,72,0.4);
+  }
+  .logo-mark svg { width: 48px; height: 48px; }
+  .splash-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    color: var(--white);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .splash-sub {
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--green-light), var(--green-brand));
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 24px rgba(74,124,47,0.4);
+    transition: all 0.2s;
+    width: 100%;
+    max-width: 280px;
+  }
+  .btn-primary:active { transform: scale(0.97); }
+
+  /* ========== HEADER ========== */
+  .header {
+    background: var(--green-deep);
+    padding: 52px 20px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .header-logo {
+    font-family: 'Playfair Display', serif;
+    color: var(--white);
+    font-size: 22px;
+    flex: 1;
+  }
+  .header-logo span { color: var(--green-light); }
+  .btn-back {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: white;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  /* ========== HOME ========== */
+  #screen-home .header { padding-bottom: 32px; }
+  .home-hero {
+    background: var(--green-deep);
+    padding: 0 20px 28px;
+  }
+  .home-greeting {
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+    font-weight: 300;
+    margin-bottom: 4px;
+  }
+  .home-title {
+    font-family: 'Playfair Display', serif;
+    color: white;
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+  .scan-btn-hero {
+    background: linear-gradient(135deg, var(--green-light), var(--green-brand));
+    border: none;
+    border-radius: 20px;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 24px rgba(74,124,47,0.35);
+    transition: all 0.2s;
+  }
+  .scan-btn-hero:active { transform: scale(0.98); }
+  .scan-icon-wrap {
+    width: 52px; height: 52px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .scan-btn-hero-text { text-align: left; }
+  .scan-btn-hero-title {
+    color: white;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .scan-btn-hero-sub {
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+  }
+
+  .home-body { padding: 20px; flex: 1; }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--text-dark);
+  }
+  .section-link {
+    color: var(--green-brand);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  /* HORSE CARDS */
+  .horse-cards { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+  .horse-card {
+    background: white;
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+  }
+  .horse-card:active { transform: scale(0.99); }
+  .horse-card.selected { border-color: var(--green-brand); }
+  .horse-avatar {
+    width: 54px; height: 54px;
+    border-radius: 14px;
+    background: var(--green-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .horse-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .horse-info { flex: 1; }
+  .horse-name { font-weight: 600; font-size: 15px; color: var(--text-dark); margin-bottom: 2px; }
+  .horse-meta { font-size: 12px; color: var(--text-light); }
+  .horse-bcs {
+    background: var(--green-pale);
+    color: var(--green-brand);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 20px;
+  }
+  .add-horse-btn {
+    background: white;
+    border: 2px dashed #d0d0d0;
+    border-radius: 16px;
+    padding: 16px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    color: var(--text-light);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .add-horse-btn:hover { border-color: var(--green-brand); color: var(--green-brand); }
+  .add-circle {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--green-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    color: var(--green-brand);
+  }
+
+  /* NAV */
+  .bottom-nav {
+    background: white;
+    border-top: 1px solid #eee;
+    display: flex;
+    padding: 8px 0 20px;
+  }
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--text-light);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    transition: color 0.2s;
+  }
+  .nav-item.active { color: var(--green-brand); }
+  .nav-item svg { width: 22px; height: 22px; }
+
+  /* ========== ADD HORSE FORM ========== */
+  .form-body { padding: 20px; flex: 1; overflow-y: auto; }
+  .form-section { margin-bottom: 24px; }
+  .form-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .form-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--text-dark);
+    background: white;
+    transition: border-color 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  .form-input:focus { border-color: var(--green-brand); }
+  .form-select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--text-dark);
+    background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a7c2f' d='M6 8L1 3h10z'/%3E%3C/svg%3E") no-repeat right 16px center;
+    -webkit-appearance: none;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-select:focus { border-color: var(--green-brand); }
+
+  /* PHOTO UPLOAD */
+  .photo-upload {
+    width: 90px; height: 90px;
+    border-radius: 20px;
+    border: 2px dashed #ccc;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    cursor: pointer;
+    gap: 6px;
+    background: var(--green-pale);
+    color: var(--green-brand);
+    font-size: 11px;
+    font-weight: 500;
+    transition: all 0.2s;
+    overflow: hidden;
+    position: relative;
+  }
+  .photo-upload:hover { border-color: var(--green-brand); }
+  .photo-upload input { position: absolute; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
+  .photo-upload img { width: 100%; height: 100%; object-fit: cover; position: absolute; }
+
+  /* USE CHIPS */
+  .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    padding: 10px 16px;
+    border-radius: 50px;
+    border: 2px solid #e0e0e0;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    background: white;
+    color: var(--text-mid);
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .chip.selected {
+    background: var(--green-brand);
+    border-color: var(--green-brand);
+    color: white;
+  }
+
+  /* BCS SLIDER */
+  .bcs-wrap { background: white; border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
+  .bcs-labels { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .bcs-label-left { font-size: 13px; color: var(--text-light); }
+  .bcs-label-right { font-size: 13px; color: var(--text-light); }
+  .bcs-emoji-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 22px; }
+  .slider-track { position: relative; height: 44px; display: flex; align-items: center; }
+  input[type=range] {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(to right, var(--amber-light), var(--green-light));
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--green-brand);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    cursor: pointer;
+  }
+  .bcs-value-display {
+    text-align: center;
+    margin-top: 12px;
+  }
+  .bcs-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: var(--green-brand);
+    line-height: 1;
+  }
+  .bcs-description {
+    font-size: 13px;
+    color: var(--text-mid);
+    margin-top: 4px;
+  }
+
+  /* HEALTH FLAGS */
+  .flag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .flag-item {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+  }
+  .flag-item.selected {
+    border-color: var(--amber);
+    background: #fff9ee;
+  }
+  .flag-icon { font-size: 20px; }
+  .flag-text { font-size: 13px; font-weight: 500; color: var(--text-mid); }
+  .flag-item.selected .flag-text { color: var(--warm-brown); }
+
+  /* SUBMIT BTN */
+  .submit-wrap { padding: 20px; padding-bottom: 32px; }
+  .btn-submit {
+    background: linear-gradient(135deg, var(--green-light), var(--green-brand));
+    color: white;
+    border: none;
+    padding: 18px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 4px 20px rgba(74,124,47,0.35);
+    transition: all 0.2s;
+  }
+  .btn-submit:active { transform: scale(0.98); }
+
+  /* ========== SCAN SCREEN ========== */
+  #screen-scan .header { background: black; }
+  .scan-viewport {
+    background: black;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 320px;
+  }
+  .scan-frame {
+    width: 260px; height: 200px;
+    border: 2px solid var(--green-light);
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 0 0 2000px rgba(0,0,0,0.5);
+  }
+  .scan-frame::before, .scan-frame::after,
+  .scan-frame .corner-br, .scan-frame .corner-bl {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--green-light);
+    border-style: solid;
+  }
+  .scan-frame::before { top: -2px; left: -2px; border-width: 3px 0 0 3px; border-radius: 10px 0 0 0; }
+  .scan-frame::after { top: -2px; right: -2px; border-width: 3px 3px 0 0; border-radius: 0 10px 0 0; }
+  .scan-frame .corner-br { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; border-radius: 0 0 10px 0; }
+  .scan-frame .corner-bl { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; border-radius: 0 0 0 10px; }
+  .scan-line {
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--green-light), transparent);
+    animation: scanMove 2s ease-in-out infinite;
+    top: 0;
+  }
+  @keyframes scanMove {
+    0% { top: 0; }
+    50% { top: calc(100% - 2px); }
+    100% { top: 0; }
+  }
+  .scan-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 0; right: 0;
+    text-align: center;
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+  }
+  .scan-body { background: var(--cream); padding: 20px; }
+  .scan-select-horse {
+    background: white;
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .scan-horse-left { display: flex; align-items: center; gap: 12px; }
+  .scan-horse-avatar { width: 40px; height: 40px; border-radius: 10px; background: var(--green-pale); display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .scan-horse-name { font-weight: 600; font-size: 14px; }
+  .scan-horse-sub { font-size: 12px; color: var(--text-light); }
+  .change-btn { color: var(--green-brand); font-size: 13px; font-weight: 500; background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+  .upload-alt {
+    border: 2px dashed #ccc;
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--text-light);
+    font-size: 13px;
+    background: white;
+  }
+
+  /* ========== RESULT SCREEN ========== */
+  .result-hero {
+    background: var(--green-deep);
+    padding: 20px 20px 28px;
+  }
+  .result-feed-name {
+    font-family: 'Playfair Display', serif;
+    color: white;
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+  .result-feed-sub { color: rgba(255,255,255,0.6); font-size: 13px; margin-bottom: 20px; }
+  .match-circle-wrap { display: flex; align-items: center; gap: 20px; }
+  .match-circle {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 4px solid var(--amber);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.05);
+    flex-shrink: 0;
+  }
+  .match-pct { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--amber-light); line-height: 1; }
+  .match-label { font-size: 9px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+  .match-verdict { color: white; }
+  .match-verdict-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+  .match-verdict-sub { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+  .result-body { padding: 20px; flex: 1; overflow-y: auto; }
+  .result-section { background: white; border-radius: 16px; padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow); }
+  .result-section-title { font-weight: 600; font-size: 14px; margin-bottom: 12px; color: var(--text-dark); }
+  .result-flags { display: flex; flex-direction: column; gap: 8px; }
+  .result-flag { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-mid); }
+  .flag-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .flag-dot.warn { background: var(--amber); }
+  .flag-dot.ok { background: var(--green-light); }
+
+  .alt-card {
+    background: white;
+    border-radius: 14px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--green-brand);
+  }
+  .alt-img { width: 52px; height: 52px; border-radius: 10px; background: var(--green-pale); display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+  .alt-info { flex: 1; }
+  .alt-name { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+  .alt-details { font-size: 11px; color: var(--text-light); }
+  .alt-match { background: var(--green-brand); color: white; font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 20px; white-space: nowrap; }
+
+  .nutrient-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+  .nutrient-row:last-child { border-bottom: none; }
+  .nutrient-name { font-size: 13px; color: var(--text-mid); }
+  .nutrient-bar-wrap { flex: 1; margin: 0 12px; height: 6px; background: #f0f0f0; border-radius: 3px; overflow: hidden; }
+  .nutrient-bar { height: 100%; border-radius: 3px; background: var(--green-light); }
+  .nutrient-val { font-size: 12px; font-weight: 600; color: var(--text-dark); min-width: 36px; text-align: right; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--green-deep);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 14px;
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+    z-index: 100;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* Animations */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .screen.active > * { animation: slideUp 0.3s ease forwards; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== SPLASH ===== -->
+  <div id="screen-splash" class="screen active">
+    <div class="splash-content">
+      <div class="logo-mark">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 36 Q12 20 20 16 Q24 14 26 10 Q28 6 32 8 Q38 10 36 18 Q34 24 28 26 Q32 28 34 36" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="33" cy="10" r="2" fill="white"/>
+          <path d="M14 36 L34 36" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h1 class="splash-title">Horsimize</h1>
+      <p class="splash-sub">Smart Feed Matching</p>
+      <button class="btn-primary" onclick="showScreen('home')">Get Started</button>
+    </div>
+  </div>
+
+  <!-- ===== HOME ===== -->
+  <div id="screen-home" class="screen">
+    <div class="home-hero">
+      <div class="header" style="padding-bottom:12px; background:transparent;">
+        <div class="header-logo">Horsi<span>mize</span></div>
+        <div style="width:36px;height:36px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;">⚙️</div>
+      </div>
+      <div style="padding: 0 20px;">
+        <p class="home-greeting">Good morning, Dr. Robert</p>
+        <h2 class="home-title">Find the perfect feed for your horse</h2>
+        <button class="scan-btn-hero" onclick="showScreen('scan')">
+          <div class="scan-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <rect x="4" y="8" width="20" height="14" rx="3" stroke="white" stroke-width="2"/>
+              <path d="M9 8V6a2 2 0 012-2h6a2 2 0 012 2v2" stroke="white" stroke-width="2"/>
+              <circle cx="14" cy="15" r="3" stroke="white" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="scan-btn-hero-text">
+            <div class="scan-btn-hero-title">Scan Feed Tag</div>
+            <div class="scan-btn-hero-sub">Point camera at any feed label</div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="margin-left:auto;opacity:0.7">
+            <path d="M7 5l5 5-5 5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="home-body">
+      <div class="section-header">
+        <h3 class="section-title">My Horses</h3>
+        <button class="section-link" onclick="showScreen('add-horse')">+ Add Horse</button>
+      </div>
+      <div class="horse-cards" id="horse-list">
+        <!-- populated by JS -->
+      </div>
+      <button class="add-horse-btn" onclick="showScreen('add-horse')">
+        <div class="add-circle">+</div>
+        <span>Add a new horse</span>
+      </button>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+        Home
+      </button>
+      <button class="nav-item" onclick="showScreen('scan')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/><circle cx="12" cy="14" r="2"/></svg>
+        Scan
+      </button>
+      <button class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        History
+      </button>
+      <button class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        Profile
+      </button>
+    </nav>
+  </div>
+
+  <!-- ===== ADD HORSE ===== -->
+  <div id="screen-add-horse" class="screen">
+    <div class="header">
+      <button class="btn-back" onclick="showScreen('home')">←</button>
+      <div class="header-logo">Add <span>Horse</span></div>
+    </div>
+    <div class="form-body">
+
+      <div class="form-section" style="display:flex;align-items:center;gap:16px;">
+        <div class="photo-upload" id="photo-upload-btn">
+          <input type="file" accept="image/*" onchange="handlePhoto(event)" />
+          <span style="font-size:28px;">📷</span>
+          <span>Photo</span>
+        </div>
+        <div style="flex:1;">
+          <label class="form-label">Horse Name</label>
+          <input type="text" class="form-input" id="horse-name" placeholder="e.g. Blue, Bella..." />
+        </div>
+      </div>
+
+      <div class="form-section" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div>
+          <label class="form-label">Age (years)</label>
+          <input type="number" class="form-input" id="horse-age" placeholder="12" min="1" max="40"/>
+        </div>
+        <div>
+          <label class="form-label">Weight (lbs)</label>
+          <input type="number" class="form-input" id="horse-weight" placeholder="1100"/>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <label class="form-label">Breed</label>
+        <select class="form-select form-input" id="horse-breed">
+          <option value="">Select breed...</option>
+          <option>Quarter Horse</option>
+          <option>Thoroughbred</option>
+          <option>Paint</option>
+          <option>Arabian</option>
+          <option>Warmblood</option>
+          <option>Appaloosa</option>
+          <option>Draft Cross</option>
+          <option>Mustang</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-section">
+        <label class="form-label">Primary Use</label>
+        <div class="chip-group" id="use-chips">
+          <div class="chip" onclick="selectChip(this,'use')">🌿 Pasture</div>
+          <div class="chip" onclick="selectChip(this,'use')">🥾 Trail</div>
+          <div class="chip" onclick="selectChip(this,'use')">🎠 Pleasure</div>
+          <div class="chip" onclick="selectChip(this,'use')">🏆 Competition</div>
+          <div class="chip" onclick="selectChip(this,'use')">🐣 Young Stock</div>
+          <div class="chip" onclick="selectChip(this,'use')">🍼 Broodmare</div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <label class="form-label">Body Condition Score</label>
+        <div class="bcs-wrap">
+          <div class="bcs-emoji-row">
+            <span title="Walking Stick">🦴</span>
+            <span>😐</span>
+            <span title="Blimp">🐷</span>
+          </div>
+          <div class="bcs-labels">
+            <span class="bcs-label-left">Walking Stick</span>
+            <span class="bcs-label-right">Blimp</span>
+          </div>
+          <div class="slider-track">
+            <input type="range" id="bcs-slider" min="1" max="9" value="5" oninput="updateBCS(this.value)"/>
+          </div>
+          <div class="bcs-value-display">
+            <div class="bcs-number" id="bcs-number">5</div>
+            <div class="bcs-description" id="bcs-desc">Moderate — Ideal body condition</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <label class="form-label">Health Flags</label>
+        <div class="flag-grid" id="health-flags">
+          <div class="flag-item" onclick="toggleFlag(this)"><span class="flag-icon">⚡</span><span class="flag-text">Insulin Resistant</span></div>
+          <div class="flag-item" onclick="toggleFlag(this)"><span class="flag-icon">🌀</span><span class="flag-text">Cushing's / PPID</span></div>
+          <div class="flag-item" onclick="toggleFlag(this)"><span class="flag-icon">🫀</span><span class="flag-text">Ulcers / EGUS</span></div>
+          <div class="flag-item" onclick="toggleFlag(this)"><span class="flag-icon">🦴</span><span class="flag-text">Laminitis Hx</span></div>
+          <div class="flag-item" onclick="toggleFlag(this)"><span class="flag-icon">👴</span><span class="flag-text">Senior (20+)</span></div>
+          <div class="flag-item" onclick="toggleFlag(this)"><span class="flag-icon">🔥</span><span class="flag-text">Hard Keeper</span></div>
+          <div class="flag-item" onclick="toggleFlag(this)"><span class="flag-icon">💧</span><span class="flag-text">Easy Keeper</span></div>
+          <div class="flag-item" onclick="toggleFlag(this)"><span class="flag-icon">🏃</span><span class="flag-text">Tying Up / PSSM</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-wrap">
+      <button class="btn-submit" onclick="saveHorse()">Save Horse Profile</button>
+    </div>
+  </div>
+
+  <!-- ===== SCAN ===== -->
+  <div id="screen-scan" class="screen">
+    <div class="header" style="background:black;">
+      <button class="btn-back" onclick="showScreen('home')" style="background:rgba(255,255,255,0.15);">←</button>
+      <div class="header-logo">Scan <span>Feed Tag</span></div>
+    </div>
+    <div class="scan-viewport">
+      <div class="scan-frame">
+        <div class="corner-br"></div>
+        <div class="corner-bl"></div>
+        <div class="scan-line"></div>
+      </div>
+      <div class="scan-hint">Align feed tag within the frame</div>
+    </div>
+    <div class="scan-body">
+      <div class="scan-select-horse">
+        <div class="scan-horse-left">
+          <div class="scan-horse-avatar" id="scan-avatar">🐴</div>
+          <div>
+            <div class="scan-horse-name" id="scan-horse-name">Select a horse</div>
+            <div class="scan-horse-sub" id="scan-horse-sub">Tap to choose</div>
+          </div>
+        </div>
+        <button class="change-btn" onclick="showScreen('home')">Change</button>
+      </div>
+      <label class="upload-alt">
+        <input type="file" accept="image/*" style="display:none" onchange="handleFeedScan(event)"/>
+        📎 Upload feed tag photo instead
+      </label>
+      <label class="btn-submit" style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;">
+        <input type="file" accept="image/*" capture="environment" style="display:none" onchange="scanRealFeed(event)"/>
+        📸 Scan Feed Tag
+      </label>
+    </div>
+  </div>
+
+  <!-- ===== RESULT ===== -->
+  <div id="screen-result" class="screen">
+    <div style="background:var(--green-deep);">
+      <div class="header" style="background:transparent;">
+        <button class="btn-back" onclick="showScreen('scan')">←</button>
+        <div class="header-logo">Feed <span>Analysis</span></div>
+        <button style="background:rgba(255,255,255,0.1);border:none;color:white;padding:8px 14px;border-radius:20px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;">Share</button>
+      </div>
+      <div class="result-hero">
+        <div class="result-feed-name">Country Acres All Stock Sweet TX 12</div>
+        <div class="result-feed-sub">General maintenance feed · Scanned just now</div>
+        <div class="match-circle-wrap">
+          <div class="match-circle">
+            <div class="match-pct">68%</div>
+            <div class="match-label">Match</div>
+          </div>
+          <div class="match-verdict">
+            <div class="match-verdict-title">Acceptable, but not ideal for Blue</div>
+            <div class="match-verdict-sub">Higher sugar content than a 14yo Easy Keeper QH needs. Adequate protein, not optimized.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-body">
+
+      <div class="result-section">
+        <div class="result-section-title">⚠️ Why it's not a perfect match</div>
+        <div class="result-flags">
+          <div class="result-flag"><div class="flag-dot warn"></div>NSC too high for an Easy Keeper — risk of weight gain & IR flare</div>
+          <div class="result-flag"><div class="flag-dot warn"></div>Molasses content not ideal for metabolic horses</div>
+          <div class="result-flag"><div class="flag-dot warn"></div>Designed for mixed livestock, not optimized for horses</div>
+          <div class="result-flag"><div class="flag-dot ok"></div>Protein level adequate for light work</div>
+          <div class="result-flag"><div class="flag-dot ok"></div>Good fiber content for gut health</div>
+        </div>
+      </div>
+
+      <div class="result-section">
+        <div class="result-section-title">📊 Nutritional Snapshot</div>
+        <div class="nutrient-row">
+          <span class="nutrient-name">Crude Protein</span>
+          <div class="nutrient-bar-wrap"><div class="nutrient-bar" style="width:60%"></div></div>
+          <span class="nutrient-val">12%</span>
+        </div>
+        <div class="nutrient-row">
+          <span class="nutrient-name">Crude Fat</span>
+          <div class="nutrient-bar-wrap"><div class="nutrient-bar" style="width:25%"></div></div>
+          <span class="nutrient-val">3.5%</span>
+        </div>
+        <div class="nutrient-row">
+          <span class="nutrient-name">Crude Fiber</span>
+          <div class="nutrient-bar-wrap"><div class="nutrient-bar" style="width:70%;background:var(--green-brand)"></div></div>
+          <span class="nutrient-val">14%</span>
+        </div>
+        <div class="nutrient-row">
+          <span class="nutrient-name">Sugar / NSC</span>
+          <div class="nutrient-bar-wrap"><div class="nutrient-bar" style="width:75%;background:var(--amber)"></div></div>
+          <span class="nutrient-val">High ⚠️</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-header" style="margin-bottom:12px;">
+          <h3 class="section-title">✅ Better Matches for Blue</h3>
+        </div>
+
+        <div class="alt-card" style="border-left-color:var(--green-light);">
+          <div class="alt-img">🌿</div>
+          <div class="alt-info">
+            <div class="alt-name">Purina® Enrich 32</div>
+            <div class="alt-details">Low NSC · Easy keeper formula · ~$1.10/lb</div>
+          </div>
+          <div class="alt-match" style="background:var(--green-brand);">92%</div>
+        </div>
+
+        <div class="alt-card">
+          <div class="alt-img">🌾</div>
+          <div class="alt-info">
+            <div class="alt-name">Purina® WellSolve L/S</div>
+            <div class="alt-details">Low starch/sugar · Ulcer friendly · ~$1.25/lb</div>
+          </div>
+          <div class="alt-match">88%</div>
+        </div>
+
+        <div class="alt-card" style="border-left-color:#aaa;">
+          <div class="alt-img">🌰</div>
+          <div class="alt-info">
+            <div class="alt-name">Triple Crown Lite</div>
+            <div class="alt-details">No molasses · Beet pulp base · ~$1.35/lb</div>
+          </div>
+          <div class="alt-match" style="background:#888;">85%</div>
+        </div>
+      </div>
+
+      <div style="background:var(--green-pale);border-radius:16px;padding:16px;margin-top:14px;margin-bottom:8px;">
+        <div style="font-weight:600;font-size:14px;margin-bottom:6px;color:var(--green-mid);">💡 Feeding Recommendation for Blue</div>
+        <div style="font-size:13px;color:var(--text-mid);line-height:1.6;">Based on Blue's 1,100 lb body weight, Easy Keeper status, and light activity, we recommend <strong>1–1.5 lbs of Enrich 32 daily</strong> as a ration balancer alongside quality grass hay. No grain needed.</div>
+      </div>
+
+    </div>
+
+    <div style="padding:16px 20px 32px;">
+      <button class="btn-submit">Save to Blue's Profile</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const bcsDescriptions = {
+    1: 'Extremely thin — Emaciated, no fat detectable',
+    2: 'Very thin — Slight fat cover over spine',
+    3: 'Thin — Fat visible over ribs',
+    4: 'Moderately thin — Ridge along back slightly visible',
+    5: 'Moderate — Ideal body condition',
+    6: 'Moderately fleshy — Slight crease down back',
+    7: 'Fleshy — Fat deposited along neck',
+    8: 'Fat — Crease down back, ribs hard to feel',
+    9: 'Extremely fat — Obvious crease, bulging fat'
+  };
+
+  let horses = JSON.parse(localStorage.getItem('horsimize_horses') || '[]');
+  if (!horses.length) {
+    horses = [
+      { name: 'Blue', age: 14, breed: 'Quarter Horse', use: 'Pasture', bcs: 6, flags: ['Easy Keeper'], photo: null },
+      { name: 'Bella', age: 9, breed: 'Warmblood', use: 'Competition', bcs: 5, flags: ['Ulcers / EGUS'], photo: null }
+    ];
+  }
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-' + id).classList.add('active');
+    if (id === 'home') renderHorses();
+    if (id === 'scan') renderScanHorse();
+    window.scrollTo(0,0);
+  }
+
+  function renderHorses() {
+    const list = document.getElementById('horse-list');
+    list.innerHTML = horses.map((h, i) => `
+      <div class="horse-card" onclick="selectHorse(${i})">
+        <div class="horse-avatar">${h.photo ? `<img src="${h.photo}"/>` : '🐴'}</div>
+        <div class="horse-info">
+          <div class="horse-name">${h.name}</div>
+          <div class="horse-meta">${h.age} yr · ${h.breed} · ${h.use}</div>
+        </div>
+        <div class="horse-bcs">BCS ${h.bcs}</div>
+      </div>
+    `).join('');
+  }
+
+  function renderScanHorse() {
+    if (horses.length) {
+      const h = horses[0];
+      document.getElementById('scan-horse-name').textContent = h.name;
+      document.getElementById('scan-horse-sub').textContent = `${h.age} yr ${h.breed} · BCS ${h.bcs}`;
+    }
+  }
+
+  function selectHorse(i) {
+    document.querySelectorAll('.horse-card').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.horse-card')[i]?.classList.add('selected');
+  }
+
+  function updateBCS(val) {
+    document.getElementById('bcs-number').textContent = val;
+    document.getElementById('bcs-desc').textContent = bcsDescriptions[val];
+  }
+
+  function selectChip(el, group) {
+    el.closest('.chip-group').querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function toggleFlag(el) { el.classList.toggle('selected'); }
+
+  function handlePhoto(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const btn = document.getElementById('photo-upload-btn');
+      btn.innerHTML = `<input type="file" accept="image/*" onchange="handlePhoto(event)"/><img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover;position:absolute;border-radius:18px;"/>`;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function handleFeedScan(e) {
+    showToast('Feed tag uploaded! Analyzing...');
+    setTimeout(() => showScreen('result'), 1500);
+  }
+
+  function saveHorse() {
+    const name = document.getElementById('horse-name').value;
+    if (!name) { showToast('Please enter a horse name'); return; }
+    const age = document.getElementById('horse-age').value || 10;
+    const breed = document.getElementById('horse-breed').value || 'Unknown';
+    const bcs = document.getElementById('bcs-slider').value;
+    const useChip = document.querySelector('#use-chips .chip.selected');
+    const use = useChip ? useChip.textContent.trim().split(' ').slice(1).join(' ') : 'Pasture';
+    const flags = Array.from(document.querySelectorAll('#health-flags .flag-item.selected')).map(f => f.querySelector('.flag-text').textContent);
+    horses.unshift({ name, age: parseInt(age), breed, use, bcs: parseInt(bcs), flags, photo: null });
+    localStorage.setItem('horsimize_horses', JSON.stringify(horses));
+    showToast(`${name} added! 🐴`);
+    setTimeout(() => showScreen('home'), 800);
+  }
+
+  const API_URL = 'https://horsimize-backend-production.up.railway.app';
+
+  async function scanRealFeed(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    showToast('📸 Analyzing feed tag...');
+
+    // Get selected horse
+    const horse = horses[0] || null;
+
+    // Convert image to base64
+    const base64 = await new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = ev => resolve(ev.target.result.split(',')[1]);
+      reader.readAsDataURL(file);
+    });
+
+    try {
+      const response = await fetch(`${API_URL}/api/analyze-feed`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          imageBase64: base64,
+          mediaType: file.type,
+          horse: horse,
+          userId: 1
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        showToast('❌ Analysis failed - try again');
+        return;
+      }
+
+      // Populate result screen with real data
+      document.querySelector('.result-feed-name').textContent = data.feedName || 'Unknown Feed';
+      document.querySelector('.result-feed-sub').textContent = data.intendedUse || '';
+      document.querySelector('.match-pct').textContent = data.matchScore + '%';
+      document.querySelector('.match-verdict-title').textContent = data.verdict || '';
+
+      // Update match circle color based on score
+      const circle = document.querySelector('.match-circle');
+      if (data.matchScore >= 80) circle.style.borderColor = 'var(--green-light)';
+      else if (data.matchScore >= 60) circle.style.borderColor = 'var(--amber)';
+      else circle.style.borderColor = '#e74c3c';
+
+      // Update warnings
+      const flagsEl = document.querySelector('.result-flags');
+      flagsEl.innerHTML = [
+        ...(data.warnings || []).map(w => `<div class="result-flag"><div class="flag-dot warn"></div>${w}</div>`),
+        ...(data.positives || []).map(p => `<div class="result-flag"><div class="flag-dot ok"></div>${p}</div>`)
+      ].join('');
+
+      // Update alternatives
+      const altsEl = document.querySelector('.result-body > div:last-of-type');
+      if (data.recommendations?.length) {
+        altsEl.innerHTML = `
+          <div class="section-header" style="margin-bottom:12px;">
+            <h3 class="section-title">✅ Better Matches for ${horse?.name || 'Your Horse'}</h3>
+          </div>
+          ${data.recommendations.map(r => `
+            <div class="alt-card">
+              <div class="alt-img">🌿</div>
+              <div class="alt-info">
+                <div class="alt-name">${r.name}</div>
+                <div class="alt-details">${r.reason} · ${r.estimatedCostPerLb || ''}</div>
+              </div>
+              <div class="alt-match">${r.matchScore}%</div>
+            </div>
+          `).join('')}
+        `;
+      }
+
+      // Update feeding recommendation
+      const recEl = document.querySelector('.result-body > div[style*="green-pale"]');
+      if (recEl && data.feedingRecommendation) {
+        recEl.querySelector('div:last-child').textContent = data.feedingRecommendation;
+      }
+
+      showScreen('result');
+
+    } catch (err) {
+      console.error(err);
+      showToast('❌ Connection error - check your internet');
+    }
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  renderHorses();
+</script>
+</body>
+</html>
