@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -834,13 +834,13 @@
         </div>
         <button class="change-btn" onclick="showScreen('home')">Change</button>
       </div>
-      <label class="upload-alt">
-        <input type="file" accept="image/*" style="display:none" onchange="handleFeedScan(event)"/>
-        📎 Upload feed tag photo instead
-      </label>
-      <label class="btn-submit" style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;">
+      <label style="display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;background:linear-gradient(135deg,var(--green-light),var(--green-brand));color:white;border:none;padding:18px;border-radius:16px;font-size:16px;font-weight:600;font-family:'DM Sans',sans-serif;width:100%;box-shadow:0 4px 20px rgba(74,124,47,0.35);margin-bottom:12px;">
         <input type="file" accept="image/*" capture="environment" style="display:none" onchange="scanRealFeed(event)"/>
-        📸 Scan Feed Tag
+        📷 Take Photo of Feed Tag
+      </label>
+      <label style="display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;background:white;color:var(--green-brand);border:2px solid var(--green-brand);padding:16px;border-radius:16px;font-size:16px;font-weight:600;font-family:'DM Sans',sans-serif;width:100%;">
+        <input type="file" accept="image/*" style="display:none" onchange="scanRealFeed(event)"/>
+        📁 Upload from Library
       </label>
     </div>
   </div>
@@ -1154,4 +1154,5 @@
   renderHorses();
 </script>
 </body>
-</html>
+</html>   
+  
