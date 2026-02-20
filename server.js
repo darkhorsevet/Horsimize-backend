@@ -1,3 +1,5 @@
+
+  
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
@@ -9,8 +11,10 @@ app.use(express.json({ limit: '10mb' }));
 // Serve frontend
 const path = require('path');
 const fs = require('fs');
-app.use(express.static(path.join(__dirname, 'public')));app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname));
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+
 // Database connection
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -70,7 +74,7 @@ initDB().catch(console.error);
 // ============================================================
 // HEALTH CHECK
 // ============================================================
-app.get('/', (req, res) => {
+app.get('/health', (req, res) => {
   res.json({ status: 'Horsimize API running 🐴', version: '1.0.0' });
 });
 
@@ -292,3 +296,7 @@ app.get('/api/scans/:horseId', async (req, res) => {
 // ============================================================
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🐴 Horsimize API running on port ${PORT}`));
+                
+        
+
+
