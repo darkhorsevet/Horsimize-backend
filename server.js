@@ -9,8 +9,8 @@ app.use(express.json({ limit: '10mb' }));
 // Serve frontend
 const path = require('path');
 const fs = require('fs');
-app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(express.static(path.join(__dirname, 'public')));app.use(express.static(__dirname));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 // Database connection
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
